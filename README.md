@@ -1,6 +1,6 @@
-# Welcome to your Expo app 👋
+# Base Expo + Supabase + Tailwind Template 👋
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This is a starter template pre-configured with [Expo](https://expo.dev), [Supabase](https://supabase.com/), and [NativeWind](https://www.nativewind.dev/) (Tailwind CSS for React Native).
 
 ## Get started
 
@@ -10,7 +10,15 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
    npm install
    ```
 
-2. Start the app
+2. Setup Environment Variables
+
+   Copy the `.env.example` file to `.env` and fill in your Supabase credentials.
+
+   ```bash
+   cp .env.example .env
+   ```
+
+3. Start the app
 
    ```bash
    npx expo start

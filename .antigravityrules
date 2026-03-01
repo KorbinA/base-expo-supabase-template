@@ -1,0 +1,30 @@
+# Project Context
+You are assisting with a React Native mobile application. 
+The primary tech stack is Expo (Frontend/Mobile) and Supabase (Backend/Database/Realtime), intended for iOS and Android deployment via EAS (Expo Application Services).
+
+# Architectural Rules & Tech Stack Constraints
+- STRICTLY USE Expo and React Native. Do not write standard React.js web code (no `<div>`, `<span>`, or `<p>` tags). You must use native components like `<View>`, `<Text>`, and `<TouchableOpacity>`.
+- Use Expo Router (`app/` directory) for all navigation and screen routing.
+- Use Supabase exclusively for database management, user authentication, Realtime WebSockets, and file/image storage.
+- Storage/Auth: Use `@react-native-async-storage/async-storage` for persisting Supabase authentication sessions locally on the device.
+
+# Security & Data Handling (CRITICAL)
+- Row Level Security (RLS): All Supabase database tables MUST have RLS enabled by default. Write secure RLS policies ensuring users can only read/write their own specific data or authorized game rooms. 
+- Key Management: Strictly differentiate between public and private environment variables. The `SUPABASE_SERVICE_ROLE_KEY` must NEVER be included in the mobile bundle.
+- Data Isolation: Always validate and filter database queries using the authenticated user's ID (`auth.uid()`) to prevent accidental cross-account data leaks.
+
+# Code Quality & Mobile Performance
+- Avoid heavy renders. Keep components modular and use `React.memo` or `useCallback` when passing functions down to child components to prevent unnecessary screen re-renders.
+- Ensure all screens handle mobile "safe areas" (notches and home indicators) using `SafeAreaView` from `react-native-safe-area-context`.
+- Errors must be handled gracefully with user-facing alerts; never crash the app or expose backend stack traces to the user.
+
+# Database Schema Reference & Source of Truth (CRITICAL)
+- SCHEMA DOCUMENT: Maintain a living database schema reference document in the project (e.g., `supabase/schema-reference.md`).
+- CONSTANT VERIFICATION: Before writing any database query, creating a new table, or adding a column, you MUST read the schema reference to verify existing tables, columns, relationships, and data types.
+- NO DUPLICATION: Never create duplicate variables, columns, or overlapping tables. If a requested feature overlaps with existing data structures, reuse or carefully expand the existing schema.
+- AUTO-UPDATE REQUIREMENT: Whenever you write code that alters the database schema, you MUST immediately update the schema reference document to accurately reflect the new global state.
+
+# Agent Workflow & Execution Rules
+- NO GHOST CODE (NO LAZY EDITS): When modifying a file, never use placeholders like `// ... existing code ...`. Always output the complete, fully functional code block or file so it can be applied cleanly.
+- STRICT UI SYSTEM: We use NativeWind (Tailwind CSS for React Native) for all styling. Stick to Tailwind utility classes (e.g., `className="flex-1 items-center justify-center bg-white"`) to keep the design system consistent and avoid cluttered `StyleSheet.create` objects unless absolutely necessary for complex animations.
+- FAIL FAST & DON'T GUESS: If you encounter an error, lack context on a specific Supabase API, or are unsure of an Expo API, DO NOT hallucinate a solution. Stop, state what you don't know, and either ask me a clarifying question or request to search the documentation.
